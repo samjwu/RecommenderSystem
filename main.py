@@ -1,3 +1,5 @@
+import time
+
 import pandas
 import sklearn
 
@@ -8,8 +10,11 @@ class RecommenderSystem:
         self.data_store = {}
 
     def train(self, dataset_name: str) -> None:
+        start_time = time.time()
         self.dataset = pandas.read_csv("data.csv")
+        print(f"{time.time() - start_time} seconds to read data")
 
+        start_time = time.time()
         term_frequency = sklearn.feature_extraction.text.TfidfVectorizer(
             analyzer="word", ngram_range=(1, 3), min_df=0, stop_words="english"
         )
@@ -25,8 +30,10 @@ class RecommenderSystem:
         for idx, row in self.dataset.iterrows():
             similar_indices = cosine_similarities[idx].argsort()[:-100:-1]
             similar_items = [
-                (cosine_similarities[idx][i], self.dataset["id"][i]) for i in similar_indices
+                (cosine_similarities[idx][i], self.dataset["id"][i])
+                for i in similar_indices
             ]
             self.data_store[row["id"]] = similar_items[1:]
+        print(f"{time.time() - start_time} seconds to train")
 
     # def recommend(self, id: str, num_items: int = 3) -> None:
