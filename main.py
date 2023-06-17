@@ -1,8 +1,8 @@
 import time
 
 import pandas
-import sklearn
-
+import sklearn.feature_extraction.text
+import sklearn.metrics.pairwise
 
 class RecommenderSystem:
     def __init__(self) -> None:
@@ -11,7 +11,7 @@ class RecommenderSystem:
 
     def train(self, dataset_name: str) -> None:
         start_time = time.time()
-        self.dataset = pandas.read_csv("data.csv")
+        self.dataset = pandas.read_csv(dataset_name)
         print(f"{time.time() - start_time} seconds to read data")
 
         start_time = time.time()
@@ -40,3 +40,5 @@ class RecommenderSystem:
         return self.data_store[item_id][:num_recommendations]
 
 
+recommender = RecommenderSystem()
+recommender.train("data.csv")
