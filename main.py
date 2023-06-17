@@ -36,4 +36,7 @@ class RecommenderSystem:
             self.data_store[row["id"]] = similar_items[1:]
         print(f"{time.time() - start_time} seconds to train")
 
-    # def recommend(self, id: str, num_items: int = 3) -> None:
+    def recommend(self, item_id: str, num_recommendations: int = 3) -> None:
+        return self.data_store[item_id][:num_recommendations]
+
+
