@@ -34,11 +34,22 @@ class RecommenderSystem:
                 for i in similar_indices
             ]
             self.data_store[row["id"]] = similar_items[1:]
-        print(f"{time.time() - start_time} seconds to train")
+        print(f"{time.time() - start_time} seconds to train\n")
 
     def recommend(self, item_id: str, num_recommendations: int = 3) -> None:
-        return self.data_store[item_id][:num_recommendations]
+        recommendations = self.data_store[item_id][:num_recommendations]
+
+        item_name = self.dataset["description"][1].split(" - ")[0]
+        print(f"Recommending {num_recommendations} items similar to \"{item_name}\":")
+
+        for recommendation in recommendations:
+            rec_item_id = recommendation[1]
+            rec_item_name = self.dataset["description"][rec_item_id].split(" - ")[0]
+            print(f"\t\"{rec_item_name}\" has a similarity score of {recommendation[0]}")
+
+        return recommendations
 
 
 recommender = RecommenderSystem()
 recommender.train("data.csv")
+recommendations = recommender.recommend(1)
