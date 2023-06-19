@@ -4,6 +4,7 @@ import pandas
 import sklearn.feature_extraction.text
 import sklearn.metrics.pairwise
 
+
 class RecommenderSystem:
     def __init__(self) -> None:
         self.dataset = None
@@ -40,12 +41,12 @@ class RecommenderSystem:
         recommendations = self.data_store[item_id][:num_recommendations]
 
         item_name = self.dataset["description"][1].split(" - ")[0]
-        print(f"Recommending {num_recommendations} items similar to \"{item_name}\":")
+        print(f'Recommending {num_recommendations} items similar to "{item_name}":')
 
         for recommendation in recommendations:
             rec_item_id = recommendation[1]
             rec_item_name = self.dataset["description"][rec_item_id].split(" - ")[0]
-            print(f"\t\"{rec_item_name}\" has a similarity score of {recommendation[0]}")
+            print(f'\t"{rec_item_name}" has a similarity score of {recommendation[0]}')
 
         return recommendations
 
